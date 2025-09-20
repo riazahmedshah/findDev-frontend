@@ -1,0 +1,10 @@
+import SignupForm1 from "../components/mvpblocks/register-form-1";
+
+
+const RegisterPage = () => {
+  return(
+    <SignupForm1/>
+  )
+}
+
+export default RegisterPage;
