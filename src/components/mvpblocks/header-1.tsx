@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, ArrowRight, Handshake, Sun, Moon } from 'lucide-react'; // Import Sun and Moon icons
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeProvider'; // Assuming the path to your ThemeProvider
+// import { useTheme } from '../../modules/auth/context/ThemeProvider';
+import { useTheme } from '@modules/auth/context/ThemeProvider';
 
 interface NavItem {
   name: string;

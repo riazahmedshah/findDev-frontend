@@ -9,6 +9,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+      "@modules":path.resolve(__dirname, "./src/modules"),
+      "@ui":path.resolve(__dirname, "./src/components/ui"),
+      "@mvpblocks":path.resolve(__dirname, "./src/components/mvpblocks"),
     },
   },
 })

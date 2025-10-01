@@ -21,7 +21,19 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@modules/*":[
+        "src/modules/*"
+      ],
+      "@ui/*":[
+        "src/components/ui/*"
+      ],
+      "@mvpblocks/*":[
+        "src/components/mvpblocks/*"
+      ]
+    }
   },
   "include": ["src"]
 }
