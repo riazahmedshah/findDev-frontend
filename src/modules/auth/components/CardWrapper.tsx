@@ -19,22 +19,22 @@ export const CardWrapper = ({
   backButtonHref
 }: cardWrapperProps) => {
   return(
-    <Card className="shadow-md">
-      <CardHeader>
-        <AuthFormHeader 
-          title={title} 
-          label={label} 
-        />
-      </CardHeader>
-      <CardContent>
-        {children}
-      </CardContent>
-      <CardFooter>
-        <AuthFormFooter 
-          backButtonLabel={backButtonLabel} 
-          backButtonHref={backButtonHref}
-        />
-      </CardFooter>
-    </Card>
+      <Card className="shadow-md">
+        <CardHeader>
+          <AuthFormHeader 
+            title={title} 
+            label={label} 
+          />
+        </CardHeader>
+        <CardContent>
+          {children}
+        </CardContent>
+        <CardFooter>
+          <AuthFormFooter 
+            label={backButtonLabel} 
+            href={backButtonHref}
+          />
+        </CardFooter>
+      </Card>
   )
 }

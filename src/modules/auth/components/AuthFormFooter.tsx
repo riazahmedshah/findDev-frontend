@@ -1,14 +1,17 @@
+import { Button } from "@ui/button";
+import { Link } from "react-router-dom";
 
 interface authFormFooterProps{
-  backButtonLabel:string;
-  backButtonHref:string;
+  label:string;
+  href:string;
 }
 
-export const AuthFormFooter = ({backButtonHref, backButtonLabel}:authFormFooterProps) => {
+export const AuthFormFooter = ({label, href}:authFormFooterProps) => {
   return(
-    <div>
-      {backButtonHref}
-      {backButtonLabel}
-    </div>
+    <Button variant="link" className="font-normal w-full" size="sm" asChild>
+      <Link to={href}>
+          {label}
+      </Link>
+    </Button>
   )
 }
