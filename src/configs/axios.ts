@@ -1,6 +1,6 @@
 import axiosDefault from "axios"
 
-const API_URL = new URL("/api/v1",import.meta.env.VITE_BACKEND_URL).toString();
+const API_URL = new URL("/api",import.meta.env.VITE_BACKEND_URL).toString();
 
 const axios = axiosDefault.create({
   baseURL: API_URL

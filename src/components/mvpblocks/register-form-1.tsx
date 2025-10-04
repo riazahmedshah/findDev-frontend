@@ -1,10 +1,19 @@
-'use client';
 import { Github, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+// import { useMutation } from "@tanstack/react-query"
+// import { signupRequest } from '@modules/auth/api/signup';
 
 export default function SignupForm1() {
   const [showPassword, setShowPassword] = useState(false);
+
+  // const {data, isPending, isError} = useMutation({
+  //   mutationFn: signupRequest
+  // })
+
+  const handleSubmit = () => {
+    console.log("submitted");
+  }
   return (
     <main className="bg-background flex min-h-screen w-full flex-col items-center justify-center sm:px-4">
       <div className="w-full space-y-4 sm:max-w-md">
@@ -86,7 +95,7 @@ export default function SignupForm1() {
             <div>
               <label className="font-medium">Username</label>
               <input
-                type="test"
+                type="text"
                 required
                 className="mt-2 w-full rounded-lg border bg-transparent px-3 py-2 shadow-sm outline-none focus:border-rose-600"
               />
@@ -120,7 +129,7 @@ export default function SignupForm1() {
                 </button>
               </div>
             </div>
-            <button className="w-full rounded-lg bg-rose-600 px-4 py-2 font-medium text-white duration-150 hover:bg-rose-500 active:bg-rose-600">
+            <button onClick={handleSubmit} className="w-full rounded-lg bg-rose-600 px-4 py-2 font-medium text-white duration-150 hover:bg-rose-500 active:bg-rose-600">
               Register
             </button>
           </form>
