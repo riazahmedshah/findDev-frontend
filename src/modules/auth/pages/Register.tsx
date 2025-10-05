@@ -1,9 +1,9 @@
-import { RegisterForm } from "../components/RegisterForm";
+import SignupForm1 from "@mvpblocks/register-form-1";
 
 
 const RegisterPage = () => {
   return(
-    <RegisterForm />
+    <SignupForm1/>
   )
 }
 

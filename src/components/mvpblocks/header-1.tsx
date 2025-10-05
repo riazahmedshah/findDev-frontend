@@ -15,24 +15,6 @@ interface NavItem {
 const navItems: NavItem[] = [
   { name: 'Find', href: '/' },
   { name: 'Explore', href: '/features' },
-  // {
-  //   name: 'Products',
-  //   href: '/products',
-  //   hasDropdown: true,
-  //   dropdownItems: [
-  //     {
-  //       name: 'Analytics',
-  //       href: '/analytics',
-  //       description: 'Track your metrics',
-  //     },
-  //     {
-  //       name: 'Dashboard',
-  //       href: '/dashboard',
-  //       description: 'Manage your data',
-  //     },
-  //     { name: 'Reports', href: '/reports', description: 'Generate insights' },
-  //   ],
-  // },
   { name: 'Pricing', href: '/pricing' },
   { name: 'About', href: '/about' },
 ];
@@ -41,7 +23,7 @@ export default function Header1() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-  const { theme, toggleTheme } = useTheme(); // Destructure theme and toggleTheme from context
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,14 +34,21 @@ export default function Header1() {
   }, []);
 
   const headerVariants = {
-    initial: { y: -100, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    scrolled: {
-      backdropFilter: 'blur(20px)',
-      backgroundColor:
-        theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-    },
+    initial: { 
+    y: -100, 
+    opacity: 0,
+    backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)'
+  },
+  animate: { 
+    y: 0, 
+    opacity: 1,
+    backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)'
+  },
+  scrolled: {
+    backdropFilter: 'blur(20px)',
+    backgroundColor: theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+  },
   };
 
   const mobileMenuVariants = {

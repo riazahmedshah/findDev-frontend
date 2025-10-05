@@ -1,22 +1,50 @@
-import { Github, Eye, EyeOff } from 'lucide-react';
+import { signupSchema, type signupRequestData } from '@/schemas/authSchema';
+import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-// import { useMutation } from "@tanstack/react-query"
-// import { signupRequest } from '@modules/auth/api/signup';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
+import { signupRequest } from '@modules/auth/api/signup';
+import { toast } from 'sonner';
+// import { isAxiosError } from 'axios';
 
 export default function SignupForm1() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
+  const {register,handleSubmit,reset, formState:{errors,isSubmitting}} = useForm<signupRequestData>({
+    resolver:zodResolver(signupSchema),
+    defaultValues:{
+      username:"",
+      email:"",
+      password:""
+    }
+  });
 
-  // const {data, isPending, isError} = useMutation({
-  //   mutationFn: signupRequest
-  // })
+  const { mutate } = useMutation({
+    mutationFn: (data:signupRequestData) => signupRequest(data),
+    onSuccess: () => {
+      console.log("Success callback executed");
+      toast.success("Signedup successfully!", {
+        description: "Thanks for registering on our platform!",
+      });
+      reset();
+      navigate("/onboarding");
+    },
+    onError: (error) => {
+      toast.error("Signup failed", {
+        description: error.message,
+      });
+    },
+  });
 
-  const handleSubmit = () => {
-    console.log("submitted");
+  const onSubmit:SubmitHandler<signupRequestData> = (data) => {
+    // console.log(data);
+    mutate(data)
   }
   return (
-    <main className="bg-background flex min-h-screen w-full flex-col items-center justify-center sm:px-4">
-      <div className="w-full space-y-4 sm:max-w-md">
+    <main className="bg-background flex min-h-screen flex-col items-center justify-center sm:px-4">
+      <div className="w-full border space-y-4 sm:max-w-md">
         <div className="text-center">
           <div className="mt-5 space-y-2">
             <h3 className="text-2xl font-bold sm:text-3xl">
@@ -34,7 +62,7 @@ export default function SignupForm1() {
           </div>
         </div>
         <div className="space-y-6 p-4 py-6 shadow sm:rounded-lg sm:p-6">
-          <div className="grid grid-cols-3 gap-x-3">
+          <div className="grid  gap-x-3">
             <button className="hover:bg-secondary active:bg-secondary/40 flex items-center justify-center rounded-lg border py-2.5 duration-150">
               <svg
                 className="h-5 w-5"
@@ -67,22 +95,6 @@ export default function SignupForm1() {
                 </defs>
               </svg>
             </button>
-            <button className="hover:bg-secondary active:bg-secondary/40 flex items-center justify-center rounded-lg border py-2.5 duration-150">
-              <svg
-                className="h-5 w-5"
-                viewBox="0 0 48 48"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15.095 43.5014C33.2083 43.5014 43.1155 28.4946 43.1155 15.4809C43.1155 15.0546 43.1155 14.6303 43.0867 14.2079C45.0141 12.8138 46.6778 11.0877 48 9.11033C46.2028 9.90713 44.2961 10.4294 42.3437 10.6598C44.3996 9.42915 45.9383 7.49333 46.6733 5.21273C44.7402 6.35994 42.6253 7.16838 40.4198 7.60313C38.935 6.02428 36.9712 4.97881 34.8324 4.6285C32.6935 4.27818 30.4988 4.64256 28.5879 5.66523C26.677 6.68791 25.1564 8.31187 24.2615 10.2858C23.3665 12.2598 23.1471 14.4737 23.6371 16.5849C19.7218 16.3885 15.8915 15.371 12.3949 13.5983C8.89831 11.8257 5.81353 9.33765 3.3408 6.29561C2.08146 8.4636 1.69574 11.0301 2.2622 13.4725C2.82865 15.9148 4.30468 18.0495 6.38976 19.4418C4.82246 19.3959 3.2893 18.9731 1.92 18.2092V18.334C1.92062 20.6077 2.7077 22.8112 4.14774 24.5707C5.58778 26.3303 7.59212 27.5375 9.8208 27.9878C8.37096 28.3832 6.84975 28.441 5.37408 28.1567C6.00363 30.1134 7.22886 31.8244 8.87848 33.0506C10.5281 34.2768 12.5197 34.9569 14.5747 34.9958C12.5329 36.6007 10.1946 37.7873 7.69375 38.4878C5.19287 39.1882 2.57843 39.3886 0 39.0777C4.50367 41.9677 9.74385 43.5007 15.095 43.4937"
-                  fill="#1DA1F2"
-                />
-              </svg>
-            </button>
-            <button className="hover:bg-secondary active:bg-secondary/40 flex items-center justify-center rounded-lg border py-2.5 duration-150">
-              <Github size={24} />
-            </button>
           </div>
           <div className="relative">
             <span className="bg-secondary block h-px w-full"></span>
@@ -90,32 +102,33 @@ export default function SignupForm1() {
               Or continue with
             </p>
           </div>
-          {/* OnSubmit declare yourself */}
-          <form className="space-y-5">
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div>
               <label className="font-medium">Username</label>
               <input
-                type="text"
-                required
+                {...register("username")}
                 className="mt-2 w-full rounded-lg border bg-transparent px-3 py-2 shadow-sm outline-none focus:border-rose-600"
               />
+              {errors.username && <p className='py-1 text-red-600'>{errors.username.message}</p>}
             </div>
             <div>
               <label className="font-medium">Email</label>
               <input
-                type="email"
-                required
+                {...register("email")}
                 className="mt-2 w-full rounded-lg border bg-transparent px-3 py-2 shadow-sm outline-none focus:border-rose-600"
               />
+              {errors.email && <p className='py-1 text-red-600'>{errors.email.message}</p>}
             </div>
             <div className="relative">
               <label className="font-medium">Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  required
+                  {...register("password")}
                   className="mt-2 w-full rounded-lg border bg-transparent px-3 py-2 shadow-sm outline-none focus:border-rose-600"
                 />
+                {errors.password && <p className='py-1 text-red-600'>{errors.password.message}</p>}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
@@ -129,7 +142,8 @@ export default function SignupForm1() {
                 </button>
               </div>
             </div>
-            <button onClick={handleSubmit} className="w-full rounded-lg bg-rose-600 px-4 py-2 font-medium text-white duration-150 hover:bg-rose-500 active:bg-rose-600">
+            {errors.root && <p className='py-1 font-semibold text-red-950'>{errors.root.message}</p>}
+            <button type='submit' disabled={isSubmitting} className="w-full rounded-lg bg-rose-600 px-4 py-2 font-medium text-white duration-150 hover:bg-rose-500 active:bg-rose-600">
               Register
             </button>
           </form>
